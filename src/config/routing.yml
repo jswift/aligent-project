@@ -2,3 +2,9 @@ index:
   class: IndexController
   route: /
   methods: [ GET ]
+
+count_days_between_dates:
+  class: DateCalculatorController
+  route: /count_days_between_dates
+  entrypoint: countDaysBetweenDates
+  methods: [ POST ]

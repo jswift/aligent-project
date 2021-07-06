@@ -13,5 +13,12 @@ abstract class BaseController {
   */
   public function handle()
   {
+    $className = get_class($this);
+
+    return $this
+      ->klein
+      ->response()
+      ->header("Content-Type", "text/plain")
+      ->body("please create a handle() method in: '$className'");
   }
 }

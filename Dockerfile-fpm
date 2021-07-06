@@ -13,6 +13,9 @@ RUN apk add --no-cache --virtual build-deps \
 # Enable YAML extension
 RUN echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini
 
+# set the default timezone as UTC
+RUN echo "date.timezone=UTC" > /usr/local/etc/php/conf.d/999-timezone.ini
+
 # Add composer
 RUN apk add --no-cache composer
 
@@ -21,6 +24,10 @@ ADD ./docker/fpm/fpm-config.conf /usr/local/etc/php-fpm.d/1-aligent-project.conf
 
 # Add the code
 ADD ./src/ /opt/aligent-project/
-
 WORKDIR /opt/aligent-project
+
+# Install the projects dependencies
 RUN composer install
+
+# Create the autoloader files
+RUN composer dump-autoload

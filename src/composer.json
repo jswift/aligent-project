@@ -13,7 +13,8 @@
   },
   "autoload": {
       "classmap": [
-        "controllers"
+        "controllers",
+        "lib"
       ]
   },
   "authors": [

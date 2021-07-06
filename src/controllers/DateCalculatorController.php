@@ -6,6 +6,7 @@ class DateCalculatorController extends BaseController {
   */
   public function countDaysBetweenDates() {
     $service = $this->klein->service();
+    $request = $this->klein->request();
 
     // perform some date format validation
     $service->validateParam('from', 'Please enter a valid \'from\' field')
@@ -16,16 +17,19 @@ class DateCalculatorController extends BaseController {
       ->notNull()
       ->isIso8601Date();
 
+    $this->addDenominationParameterIfNotExists();
+
     // convert the string to a date object
-    $from = DateTime::createFromFormat(DATE_ISO8601, $this->klein->request()->from);
-    $to = DateTime::createFromFormat(DATE_ISO8601, $this->klein->request()->to);
+    $from = DateTime::createFromFormat(DATE_ISO8601, $request->from);
+    $to = DateTime::createFromFormat(DATE_ISO8601, $request->to);
 
     // calculate the diff between the two dates
     $diff = $from->diff($to);
 
     // construct and send the response
     $response = new stdClass();
-    $response->daysDiff = $diff->days;
+    $response->diff = TimeDenomination::convertBetween($diff->days, TimeDenomination::DAY, $request->denomination);
+    $response->diffDenomination = $request->denomination;
     return $this->klein->response()->json($response);
   }
 
@@ -39,6 +43,7 @@ class DateCalculatorController extends BaseController {
 
   public function countWeekdaysBetweenDates() {
     $service = $this->klein->service();
+    $request = $this->klein->request();
 
     // perform some date format validation
     $service->validateParam('from', 'Please enter a valid \'from\' field')
@@ -49,9 +54,11 @@ class DateCalculatorController extends BaseController {
       ->notNull()
       ->isIso8601Date();
 
+    $this->addDenominationParameterIfNotExists();
+
     // convert the string to a date object
-    $from = DateTime::createFromFormat(DATE_ISO8601, $this->klein->request()->from);
-    $to = DateTime::createFromFormat(DATE_ISO8601, $this->klein->request()->to);
+    $from = DateTime::createFromFormat(DATE_ISO8601, $request->from);
+    $to = DateTime::createFromFormat(DATE_ISO8601, $request->to);
 
     // order the dates from min to max
     $order = [
@@ -73,7 +80,8 @@ class DateCalculatorController extends BaseController {
 
     // construct and send the response
     $response = new stdClass();
-    $response->weekdaysDiff = $weekdays;
+    $response->weekdaysDiff = TimeDenomination::convertBetween($weekdays, TimeDenomination::DAY, $request->denomination);
+    $response->weekdaysDenomination = $request->denomination;;
     return $this->klein->response()->json($response);
   }
 
@@ -82,6 +90,7 @@ class DateCalculatorController extends BaseController {
   */
   public function countWeeksBetweenDates() {
     $service = $this->klein->service();
+    $request = $this->klein->request();
 
     // perform some date format validation
     $service->validateParam('from', 'Please enter a valid \'from\' field')
@@ -92,9 +101,11 @@ class DateCalculatorController extends BaseController {
       ->notNull()
       ->isIso8601Date();
 
+    $this->addDenominationParameterIfNotExists();
+
     // convert the string to a date object
-    $from = DateTime::createFromFormat(DATE_ISO8601, $this->klein->request()->from);
-    $to = DateTime::createFromFormat(DATE_ISO8601, $this->klein->request()->to);
+    $from = DateTime::createFromFormat(DATE_ISO8601, $request->from);
+    $to = DateTime::createFromFormat(DATE_ISO8601, $request->to);
 
     // order the dates from min to max
     $order = [
@@ -121,7 +132,26 @@ class DateCalculatorController extends BaseController {
 
     // construct and send the response
     $response = new stdClass();
-    $response->weeksDiff = $diff->days / 7;
+    $response->weekdaysDiff = TimeDenomination::convertBetween($diff->days, TimeDenomination::DAY, $request->denomination);
+    $response->weekdaysDenomination = $request->denomination;;
     return $this->klein->response()->json($response);
+  }
+
+  /*
+  * Add the denomination parameter to the request if it doesnt exist
+  * Specify a sensible default
+  */
+  private function addDenominationParameterIfNotExists() {
+    $service = $this->klein->service();
+    $request = $this->klein->request();
+
+    if ($request->denomination) {
+      $service->validateParam('denomination', "please enter a valid denomination")
+      ->isTimeDenomination();
+    } else {
+      $request->paramsPost()->merge([
+        'denomination' => TimeDenomination::DAY
+      ]);
+    }
   }
 }

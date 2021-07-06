@@ -1,6 +1,8 @@
 version: "3.9"
 services:
   fpm:
+    environment:
+      PHP_DEV: "yes"
     build:
       context: .
       dockerfile: ./Dockerfile-fpm

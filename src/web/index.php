@@ -9,7 +9,7 @@ call_user_func(function() {
   $klein = new \Klein\Klein(null, $app);
 
   // handle otherwise unhandled exceptions gracefully (eg. validation exceptions)
-  $klein->onError(function ($klein, $message, $type, Exception $err){
+  $klein->onError(function ($klein, $message, $type, $err){
 
     // handle validation exceptions
     if ($err instanceof Klein\Exceptions\ValidationException) {
@@ -26,6 +26,21 @@ call_user_func(function() {
     }
 
     // anything else will get handled and show a generic message
+
+    // throw up developer safe information in development mode
+    if (getenv("PHP_DEV") === "yes") {
+      // TODO: make this a nice page throwing stack trace and everything
+      // just a text dump showing the basic information works fine for now however...
+      return $klein
+        ->response()
+        ->header("Content-Type", "text/plain")
+        ->code(500)
+        ->body("
+Exception message: '{$err->getMessage()}'
+file: {$err->getFile()}:{$err->getLine()}
+        ")->send();
+    }
+
     // TODO: report on un-handleable errors
     return $klein
       ->response()

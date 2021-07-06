@@ -3,7 +3,8 @@
   "description": "Simple application to see how an applicant works",
   "type": "project",
   "require": {
-    "klein/klein": "~2.1.2"
+    "klein/klein": "~2.1.2",
+    "erusev/parsedown": "~1.7.4"
   },
   "autoload": {
       "classmap": [

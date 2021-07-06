@@ -5,18 +5,18 @@ index:
 
 count_days_between_dates:
   class: DateCalculatorController
-  route: /count_days_between_dates
+  route: /api/count_days_between_dates
   entrypoint: countDaysBetweenDates
   methods: [ POST ]
 
 count_weekdays_bettween_dates:
   class: DateCalculatorController
-  route: /count_weekdays_between_dates
+  route: /api/count_weekdays_between_dates
   entrypoint: countWeekdaysBetweenDates
   methods: [ POST ]
 
 count_weeks_bettween_dates:
   class: DateCalculatorController
-  route: /count_weeks_bettween_dates
+  route: /api/count_weeks_bettween_dates
   entrypoint: countWeeksBetweenDates
   methods: [ POST ]

@@ -7,7 +7,7 @@
 2. run `docker-compose up` in the newly created `aligent-project` folder.
 
 # How do i run unit tests?
-they dont exist yet
+1. run `make test`
 
 # Information
 Specify a debug mode by specifying `PHP_DEV` mode to the `fpm` container
@@ -21,7 +21,7 @@ Specify a debug mode by specifying `PHP_DEV` mode to the `fpm` container
 6. Timezones are handled by the use of `ISO1801` timestamps -- no changes are necessary for step #5
 7. Added the 'third parameter' to all endpoints for consistency
 
-# TODO
+# TODO (wont actually do, but some things that should be considered before putting into production)
 * The rest of the readme
 * change the error response structure to something like:
 ```json

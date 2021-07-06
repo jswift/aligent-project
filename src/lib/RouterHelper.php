@@ -1,6 +1,13 @@
 <?php
 
+/*
+* A helper class containing useful router methods, exposing only the ones we want to use externally
+*/
 class RouterHelper {
+
+  /*
+  * Create and configure an instance of Klein router
+  */
   public static function createKleinInstance() {
     // configure routing
     $app = new \Klein\App();
@@ -13,6 +20,9 @@ class RouterHelper {
     return $klein;
   }
 
+  /*
+  * Load validators into router
+  */
   private static function createValidators(Klein\Klein $klein) {
 
     $validators = glob(__DIR__."/validators/*Validator.php");
@@ -33,6 +43,9 @@ class RouterHelper {
     }
   }
 
+  /*
+  * Configure error handling in router
+  */
   private static function addErrorHandling(Klein\Klein $klein) {
 
     // handle otherwise unhandled exceptions gracefully (eg. validation exceptions)
@@ -87,6 +100,9 @@ class RouterHelper {
     });
   }
 
+  /*
+  * Load routes into the router
+  */
   private static function addRoutes(Klein\Klein $klein) {
 
     // iterate routing.yml to populate the klein router

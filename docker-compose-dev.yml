@@ -1,6 +1,8 @@
 # docker-compose file to include when creating the dev environment
 services:
   fpm:
+    environment:
+      PHP_DEV: "yes"
     volumes:
       - ./src:/opt/aligent-project
 

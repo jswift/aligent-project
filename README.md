@@ -4,7 +4,7 @@
 
 # How do i run this?
 1. clone the repo: `git clone git@github.com:mattftw/aligent-project.git`
-2. run `docker-compose up` in the newly newly created `aligent-project` folder.
+2. run `docker-compose up` in the newly created `aligent-project` folder.
 
 # How do i run unit tests?
 they dont exist yet

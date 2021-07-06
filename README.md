@@ -13,7 +13,7 @@ they dont exist yet
 Specify a debug mode by specifying `PHP_DEV` mode to the `fpm` container
 
 # Assumptions made
-1. `/count_days_between_dates` endpoint doesnt need to return days / minutes / seconds.
+1. `/count_days_between_dates` endpoint doesnt need day / minute / second granularity.
 2. `xUnit` wont really integrate well with PHP. I will choose a different unit testing framework.
 3. Each item in the challange is a new endpoint (where applicable) instead of a single monolithic endpoint.
 4. adding of `days` and `weeks` into challenge #4

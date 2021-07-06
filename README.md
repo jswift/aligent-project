@@ -22,13 +22,13 @@ Specify a debug mode by specifying `PHP_DEV` mode to the `fpm` container
 7. Added the 'third parameter' to all endpoints for consistency
 
 # TODO (wont actually do, but some things that should be considered before putting into production)
-* The rest of the readme
 * change the error response structure to something like:
 ```json
 {
   "validationErrors": {
     "field1": {
-      "message": "field1 is required"
+      "message": "field1 is required",
+      "code": "REQUIRED_FIELD"
     }
   }
 }

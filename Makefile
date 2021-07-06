@@ -3,6 +3,7 @@
 help :
 	@echo "run 'make up' for 'quick starting'"
 	@echo "run 'make dev' for development environment"
+	@echo "run 'make test' to run unit tests"
 
 dev :
 	docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d --build

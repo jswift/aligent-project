@@ -1,0 +1,1 @@
+this is an example of a static file -- which should be served through NGINX and not served through FPM

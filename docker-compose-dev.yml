@@ -1,0 +1,9 @@
+# docker-compose file to include when creating the dev environment
+services:
+  fpm:
+    volumes:
+      - ./src:/opt/aligent-project
+
+  nginx:
+    volumes:
+      - ./src/web:/opt/aligent-project/web

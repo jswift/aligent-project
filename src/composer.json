@@ -1,0 +1,26 @@
+{
+  "name": "mattftw/aligent-assignment",
+  "description": "Simple application to see how an applicant works",
+  "type": "project",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:mattftw/aligent-project.git"
+    }
+  ],
+  "require": {
+    "klein/klein": "~2.1.2"
+  },
+  "autoload": {
+      "classmap": [
+        "controllers"
+      ]
+  },
+  "authors": [
+    {
+      "name": "mattftw",
+      "email": "mattftw@users.noreply.github.com"
+    }
+  ],
+  "minimum-stability": "dev"
+}

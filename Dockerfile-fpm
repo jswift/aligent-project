@@ -1,0 +1,26 @@
+FROM php:fpm-alpine3.13
+
+# Install image dependencies
+RUN apk add --no-cache --virtual build-deps \
+  yaml-dev \
+  autoconf \
+  make \
+  g++ && \
+  apk add --no-cache yaml && \
+  pecl install yaml && \
+  apk del build-deps
+
+# Enable YAML extension
+RUN echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini
+
+# Add composer
+RUN apk add --no-cache composer
+
+# Configure FPM
+ADD ./docker/fpm/fpm-config.conf /usr/local/etc/php-fpm.d/1-aligent-project.conf
+
+# Add the code
+ADD ./src/ /opt/aligent-project/
+
+WORKDIR /opt/aligent-project
+RUN composer install
